@@ -42,111 +42,96 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Solo inicializar el carrusel si hay elementos
-    if (carouselItems.length > 0) {
-        showSlide(currentIndex); // Asegurarse de que el primer slide esté activo al cargar
-    }
-
-    // Asegúrate de que los botones existan antes de añadir escuchadores de eventos
     if (prevBtn && nextBtn) {
         prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : carouselItems.length - 1;
             showSlide(currentIndex);
         });
+
         nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % carouselItems.length;
+            currentIndex = (currentIndex < carouselItems.length - 1) ? currentIndex + 1 : 0;
             showSlide(currentIndex);
         });
+        showSlide(currentIndex); // Mostrar el primer slide al cargar
+    } else {
+        console.warn('Botones de carrusel (prevBtn, nextBtn) o ítems no encontrados. El carrusel no funcionará.');
     }
 
-    // Desplazamiento suave para los enlaces de navegación
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
 
-            // Verificar si el elemento de destino existe antes de intentar desplazar
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            } else {
-                console.warn(`Elemento de destino no encontrado para el enlace: ${targetId}`);
-            }
+    // Lightbox para la Galería de Imágenes
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeLightboxBtn = document.querySelector('.close-btn');
+
+    document.querySelectorAll('.gallery-grid img.gallery-image-clickable').forEach(image => {
+        image.addEventListener('click', () => {
+            lightbox.style.display = 'flex'; // Usamos flex para centrar
+            lightboxImg.src = image.src;
+            // Opcional: añadir clase para animaciones CSS
+            lightbox.classList.add('active');
         });
     });
 
-    // FUNCIONALIDAD LIGHTBOX / AMPLIAR IMAGENES
-    const galleryImages = document.querySelectorAll('.gallery-image-clickable');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.querySelector('.close-btn');
-
-    // Asegúrate de que los elementos del lightbox existan antes de añadir escuchadores
-    if (lightbox && lightboxImg && closeBtn) {
-        galleryImages.forEach(image => {
-            image.addEventListener('click', () => {
-                lightbox.style.display = 'flex';
-                lightboxImg.src = image.src;
-            });
-        });
-
-        closeBtn.addEventListener('click', () => {
+    if (closeLightboxBtn) {
+        closeLightboxBtn.addEventListener('click', () => {
             lightbox.style.display = 'none';
+            lightbox.classList.remove('active');
         });
+    }
 
+    // Cerrar lightbox haciendo clic fuera de la imagen
+    if (lightbox) {
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
                 lightbox.style.display = 'none';
+                lightbox.classList.remove('active');
             }
         });
-    } else {
-        console.warn('Alguno de los elementos del Lightbox no se encontró en el DOM.');
     }
 
-    // NUEVA FUNCIONALIDAD: ENVÍO DE FORMULARIO CON FETCH Y MODAL DE CONFIRMACIÓN
+
+    // Modal de Confirmación para el Formulario de Contacto
     const contactForm = document.querySelector('.contact-form');
     const confirmationModal = document.getElementById('confirmationModal');
-    const closeConfirmationModalBtn = document.querySelector('#confirmationModal .close-button');
+    // Si tienes un botón de cierre dentro del modal, búscalo aquí:
+    // const closeConfirmationModalBtn = confirmationModal ? confirmationModal.querySelector('.close-button') : null;
 
-    // Mover las funciones del modal para que estén disponibles
     function showConfirmationModal() {
-        if (confirmationModal) { // <--- ESTO ES VITAL: Verifica si el modal existe aquí
+        if (confirmationModal) {
+            confirmationModal.classList.remove('hide'); // Asegura que no tenga la clase hide
             confirmationModal.style.display = 'flex';
+            // Pequeño retardo para asegurar que la propiedad display se aplique antes de la transición de opacidad
             setTimeout(() => {
                 confirmationModal.classList.add('show');
             }, 10);
-             // === AÑADE ESTA LÍNEA AQUÍ ===
-            setTimeout(() => {
-                hideConfirmationModal(); // Oculta el modal después de 3 segundos
-            }, 3000); // 3000 milisegundos = 3 segundos
-        } else {
-            console.warn('confirmationModal no se encontró al intentar mostrarlo.');
         }
     }
 
     function hideConfirmationModal() {
-        if (confirmationModal) { // <--- ESTO ES VITAL: Verifica si el modal existe aquí
+        if (confirmationModal) {
             confirmationModal.classList.remove('show');
+            confirmationModal.classList.add('hide'); // Añade la clase hide para la animación de salida
+            // Espera a que termine la animación antes de ocultar
             confirmationModal.addEventListener('transitionend', function handler() {
-                confirmationModal.style.display = 'none';
+                if (!confirmationModal.classList.contains('show')) { // Solo si no se ha vuelto a mostrar
+                    confirmationModal.style.display = 'none';
+                    confirmationModal.classList.remove('hide'); // Limpia la clase hide
+                }
                 confirmationModal.removeEventListener('transitionend', handler);
-            }, { once: true });
-        } else {
-            console.warn('confirmationModal no se encontró al intentar ocultarlo.');
+            });
         }
     }
 
-    // Asegúrate de que el formulario de contacto exista
+
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Evitar el envío predeterminado del formulario
 
+            const formEndpoint = contactForm.action; // Obtiene la URL de action del formulario
             const formData = new FormData(contactForm);
 
             try {
-                const response = await fetch(contactForm.action, {
+                const response = await fetch(formEndpoint, {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -174,11 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('El formulario de contacto (.contact-form) no se encontró en el DOM.');
     }
 
-    // Asegúrate de que el botón de cierre del modal y el modal mismo existan
-    if (closeConfirmationModalBtn) {
-        closeConfirmationModalBtn.addEventListener('click', hideConfirmationModal);
-    }
-
+    // Asegúrate de que el modal exista y añade un listener para cerrarlo al hacer clic fuera
     if (confirmationModal) {
         confirmationModal.addEventListener('click', (e) => {
             if (e.target === confirmationModal) {
@@ -186,4 +167,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // NUEVA FUNCIONALIDAD: Menú de Navegación Responsivo (Menú Hamburguesa)
+    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburgerBtn && navLinks) {
+        hamburgerBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburgerBtn.classList.toggle('open'); // Para animar el icono de hamburguesa
+        });
+
+        // Cerrar el menú cuando se hace clic en un enlace de navegación
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburgerBtn.classList.remove('open');
+            });
+        });
+    } else {
+        console.warn('Botón de hamburguesa o enlaces de navegación no encontrados.');
+    }
+
 });

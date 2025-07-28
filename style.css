@@ -434,33 +434,119 @@ footer a:hover {
     }
 }
 
+/* Estilos para el menú hamburguesa (oculto por defecto en escritorio) */
+.hamburger-menu {
+    display: none; /* Oculto por defecto en escritorio */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.hamburger-menu .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Cuando el menú está abierto (clase 'open') */
+.hamburger-menu.open .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-menu.open .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.open .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
 
 /* Media Queries para Responsividad */
 @media (max-width: 768px) {
     .navbar .container {
-        flex-direction: column;
-        text-align: center;
+        flex-direction: row; /* Vuelve a fila para que el logo y el botón estén en la misma línea */
+        justify-content: space-between; /* Espacio entre el logo y el botón */
+        align-items: center;
+        padding: 15px 20px; /* Mantener un padding adecuado */
+    }
+
+    .hamburger-menu {
+        display: block; /* Muestra el botón de hamburguesa en móviles */
     }
 
     .navbar .logo {
-        margin-bottom: 15px;
+        margin-bottom: 0; /* Elimina el margen inferior del logo en esta vista */
     }
 
     .nav-links {
+        display: none; /* Oculta los enlaces por defecto en móviles */
         flex-direction: column;
+        background-color: var(--primary-color); /* Fondo para el menú desplegado */
+        position: absolute;
+        top: 65px; /* Altura de la navbar, ajusta si es necesario */
+        left: 0;
+        width: 100%;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px var(--shadow-color);
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(-100%); /* Para que esté fuera de la vista inicialmente */
+        opacity: 0;
+        z-index: 999; /* Por debajo de la navbar pero por encima del contenido */
+    }
+
+    .nav-links.active {
+        display: flex; /* Muestra los enlaces cuando el menú está activo */
+        transform: translateY(0); /* Desliza hacia abajo */
+        opacity: 1;
     }
 
     .nav-links li {
-        margin: 10px 0;
+        margin: 0; /* Elimina márgenes entre los ítems de lista */
+    }
+
+    .nav-links a {
+        padding: 12px 20px; /* Padding para cada enlace */
+        text-align: center;
+        width: 100%; /* Ocupa todo el ancho */
+        box-sizing: border-box; /* Incluye padding en el width */
+    }
+
+    .nav-links a:hover {
+        background-color: var(--primary-dark);
+    }
+
+    /* AJUSTES ACTUALIZADOS PARA LA SECCIÓN HERO EN MÓVILES */
+    .hero-section {
+        padding: 100px 20px 60px; /* Ajusta el padding superior e inferior */
+        min-height: auto;
+        height: auto;
+        background-repeat: no-repeat;
+        background-position: center 30%; /* Ajusta este valor para mover la imagen verticalmente */
+        background-size: cover; /* La imagen cubre todo el contenedor */
+    }
+
+    .hero-content {
+        text-align: center;
+        padding: 20px; /* Añade un poco de padding alrededor del texto */
     }
 
     .hero-content h1 {
-        font-size: 2.5em;
+        font-size: 2.2em; /* Reduce un poco el tamaño del título */
+        margin-bottom: 15px; /* Reduce el margen inferior */
+        line-height: 1.2; /* Ajusta la altura de la línea para mejor lectura */
     }
 
     .hero-content p {
-        font-size: 1em;
+        font-size: 1em; /* Ajusta el tamaño del subtítulo */
+        margin-bottom: 20px; /* Reduce el margen inferior */
+        line-height: 1.4; /* Ajusta la altura de la línea */
     }
+
 
     .section-card {
         margin: 20px auto;

@@ -1,0 +1,638 @@
+/* Variables CSS para facilitar la gestión de colores y fuentes */
+:root {
+    --primary-color: #3f51b5; /* Azul índigo de Material Design */
+    --primary-dark: #303f9f;
+    --accent-color: #ff4081; /* Rosa de Material Design para acentos */
+    --text-color: #333;
+    --background-color: #f5f5f5; /* Gris claro para el fondo */
+    --alt-background-color: #eceff1; /* Gris más claro, casi blanco roto para contraste */
+    --card-background: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Reset básico y fuente global */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.5);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    scroll-behavior: smooth; /* Para el desplazamiento suave entre secciones */
+}
+
+/* Contenedor principal para centrar contenido */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Encabezado y Barra de Navegación */
+.navbar {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 0;
+    /*box-shadow: 0 2px 4px var(--shadow-color);*/
+    box-shadow: 4px 5px 4px rgba(0,0,0,0.5);
+    position: fixed; /* Barra de navegación fija */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Botones */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #e0326e; /* Un tono más oscuro del acento */
+    transform: translateY(-2px);
+}
+
+/* Secciones generales */
+main {
+    padding-top: 80px; /* Espacio para la barra de navegación fija */
+}
+
+.section-card {
+    background-color: var(--card-background);
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    animation: fadeIn 1s ease-out; /* Animación de aparición */
+}
+
+/* Estilos de los Títulos de Sección (h2) */
+.section-card h2, .section-alt-background h2 {
+    color: var(--primary-dark);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombreado sutil */
+}
+
+/* Añadir un subrayado animado o decorativo a los títulos */
+.section-card h2::after, .section-alt-background h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color);
+    margin: 10px auto 0 auto;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transition: transform 0.4s ease-out;
+}
+
+/* Animación del subrayado al pasar el ratón o al cargarse la sección (con JS si se desea) */
+.section-card h2:hover::after, .section-alt-background h2:hover::after {
+    transform: scaleX(1);
+}
+
+/* Sección de Fondo Alternativo (para Contacto) */
+.section-alt-background {
+    background-color: var(--alt-background-color);
+    margin: 40px auto;
+    padding: 40px 20px;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Sección Hero (Inicio) */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('imagenes/hero-aeromodelismo.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Galería de Imágenes - MODIFICADA */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Nuevo estilo para imágenes clickeables en galería */
+.gallery-image-clickable {
+    cursor: pointer; /* Indicar que es clickeable */
+}
+
+
+/* Presentación con Comentarios (Carrusel) */
+.presentation-carousel {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+.carousel-item {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--card-background);
+}
+
+.carousel-item.active {
+    display: block;
+    animation: slideIn 0.5s ease-out;
+}
+
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.carousel-caption {
+    font-size: 1.1em;
+    color: var(--text-color);
+    padding: 0 10px;
+}
+
+.carousel-nav {
+    text-align: center;
+}
+
+.carousel-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.carousel-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Formulario de Contacto */
+.form-container-shadow {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+}
+
+.contact-intro-text {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--primary-dark);
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(63, 81, 181, 0.3);
+}
+
+.contact-form .btn-primary {
+    width: auto;
+}
+
+
+/* Pie de Página */
+footer {
+    background-color: var(--primary-dark);
+    color: white;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 50px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent-color);
+}
+
+
+/* Lightbox / Modal Styles - AÑADIDO */
+.lightbox {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Cubre toda la pantalla */
+    z-index: 1001; /* Por encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita el scroll si la imagen es muy grande */
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro semitransparente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    align-items: center; /* Centrar contenido verticalmente */
+    cursor: pointer; /* Indicar que se puede cerrar al hacer clic fuera */
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%; /* Ancho máximo de la imagen */
+    max-height: 90%; /* Altura máxima de la imagen */
+    object-fit: contain; /* Asegura que la imagen completa sea visible */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease-out; /* Animación de aparición */
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1002; /* Para que esté por encima de la imagen */
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animaciones de Desplazamiento (Scroll Reveal) */
+[data-aos] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Keyframes para animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes zoomIn { /* Nueva animación para el lightbox */
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar .logo {
+        margin-bottom: 15px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+
+    .section-card {
+        margin: 20px auto;
+        padding: 25px;
+    }
+
+    /* Estilos de los Títulos de Sección (h2) en móviles */
+    .section-card h2, .section-alt-background h2 {
+        font-size: 1.8em;
+    }
+    .section-card h2::after, .section-alt-background h2::after {
+        width: 40px;
+    }
+
+    .section-alt-background {
+        padding: 25px 15px;
+    }
+
+    .form-container-shadow {
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .contact-intro-text {
+        font-size: 1em;
+    }
+
+    /* Lightbox en móviles */
+    .close-btn {
+        top: 15px;
+        right: 20px;
+        font-size: 30px;
+    }
+}
+
+/* Sección de Videos */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    gap: 20px; /* Espacio entre videos */
+    margin-top: 30px;
+}
+
+.video-item {
+    background-color: var(--alt-background-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    transition: transform 0.3s ease;
+}
+
+.video-item:hover {
+    transform: translateY(-5px); /* Pequeño efecto al pasar el ratón */
+}
+
+.video-item video {
+    width: 100%; /* El video ocupa todo el ancho del contenedor */
+    height: 220px; /* Altura fija para uniformidad, puedes ajustar */
+    object-fit: cover; /* Recorta el video si es necesario para llenar el espacio */
+    display: block; /* Elimina espacio extra debajo del video */
+}
+
+.video-caption {
+    padding: 15px;
+    font-size: 0.95em;
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Media Queries para Responsividad - Ajustes para videos */
+@media (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+    }
+
+    .video-item video {
+        height: 180px; /* Ajuste de altura para móviles */
+    }
+}
+
+/* Estilos para el Modal de Confirmación */
+.modal {
+    display: none; /* Oculto por defecto, JS lo hará 'flex' */
+    position: fixed; /* Posición fija en la pantalla */
+    z-index: 1003; /* Por encima de todo, incluido el lightbox */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6); /* Fondo oscuro semitransparente */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    opacity: 0; /* Para la animación de entrada */
+    transition: opacity 0.4s ease-in-out;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+/* NUEVA REGLA PARA LA ANIMACIÓN DE SALIDA (AÑADIR ESTO) */
+.modal.hide {
+    opacity: 0;
+}
+
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 80%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    transform: translateY(-50px); /* Para la animación de "caída" */
+    /* CAMBIO AQUÍ: Curva de animación más dinámica para el transform */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+/* NUEVA REGLA PARA LA ANIMACIÓN DE SALIDA DEL CONTENIDO (AÑADIR ESTO) */
+.modal.hide .modal-content {
+    transform: translateY(-50px); /* Vuelve a subir al ocultarse */
+    opacity: 0; /* Se desvanece también */
+}
+
+
+.modal-content p {
+    font-size: 1.2em;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+.modal-content p:first-of-type {
+    font-weight: 500;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+    .modal-content p {
+        font-size: 1em;
+    }
+    .close-button {
+        font-size: 24px;
+        top: 8px;
+        right: 12px;
+    }
+}
